@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nfu.twohand.mapper.CommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.nfu.twohand.pojo.Comment">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="good_id" column="good_id" jdbcType="INTEGER"/>
+            <result property="customer" column="customer" jdbcType="VARCHAR"/>
+            <result property="cimage" column="cimage" jdbcType="VARCHAR"/>
+            <result property="comment" column="comment" jdbcType="VARCHAR"/>
+            <result property="comment_time" column="comment_time" jdbcType="TIMESTAMP"/>
+            <result property="star" column="star" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,good_id,customer,
+        cimage,comment,comment_time,
+        star
+    </sql>
+</mapper>

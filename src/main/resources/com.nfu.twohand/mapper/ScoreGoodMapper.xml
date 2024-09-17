@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nfu.twohand.mapper.ScoreGoodMapper">
+
+    <resultMap id="BaseResultMap" type="com.nfu.twohand.pojo.ScoreGood">
+            <result property="user_id" column="user_id" jdbcType="INTEGER"/>
+            <result property="good_id" column="good_id" jdbcType="INTEGER"/>
+            <result property="score" column="score" jdbcType="INTEGER"/>
+            <result property="time" column="time" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,good_id,score,
+        time
+    </sql>
+</mapper>

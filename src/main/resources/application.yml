@@ -1,0 +1,27 @@
+server:
+  port: 8088
+location: E:\Projects\twohands
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/twohand
+    username: root
+    password: 123456
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/static/assets/,file:${location}
+  # 文件上传
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#pagehelper:
+#  helper-dialect: mysql
+mybatis:
