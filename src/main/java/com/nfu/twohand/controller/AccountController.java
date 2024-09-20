@@ -88,7 +88,7 @@ public class AccountController {
             qw.eq("username", username);
             User user = userService.getOne(qw);
             session.setAttribute("currentUser", user.getUsername());
-            session.setAttribute("password", user.getPassword());
+            session.setAttribute("password", password);
             session.setAttribute("userId", user.getId());
             session.setAttribute("email", user.getEmail());
             session.setAttribute("phone", user.getPhone());
@@ -119,7 +119,7 @@ public class AccountController {
             qw.eq("sname", username);
             Student student = studentService.getOne(qw);
             session.setAttribute("currentUser", student.getSname());
-            session.setAttribute("password", student.getPassword());
+            session.setAttribute("password", password);
             session.setAttribute("userId", student.getId());
             session.setAttribute("email", student.getEmail());
             session.setAttribute("phone", student.getPhone());
@@ -192,13 +192,11 @@ public class AccountController {
     @RequestMapping("profile")
     public String profile(HttpSession session, Model model) {
         String currentUser = (String) session.getAttribute("currentUser");
+        String password = (String) session.getAttribute("password");
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq("username", currentUser);
         User one = userService.getOne(qw);
-        String password = (String) session.getAttribute("password");
-        if (password != null) {
-            one.setPassword(password);
-        }
+        one.setPassword(password);
         model.addAttribute("user", one);
         return "admin-profile";
     }
