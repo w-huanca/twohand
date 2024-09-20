@@ -25,7 +25,7 @@ public class Comment implements Serializable {
     /**
      * 
      */
-    private Integer good_id;
+    private Integer goodId;
 
     /**
      * 评论人
@@ -46,7 +46,7 @@ public class Comment implements Serializable {
      * 
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date comment_time;
+    private Date commentTime;
 
     /**
      * 

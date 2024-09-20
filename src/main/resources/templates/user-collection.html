@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Links Of CSS File -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+    <link rel="stylesheet" href="assets/css/odometer.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <!-- Title -->
+    <title>校园二手交易平台</title>
+</head>
+
+<body>
+<!-- Start For overflow-hidden & tween-animation -->
+<div class="overflow-hidden tween-animation">
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="preloader-container">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal-1"></div>
+                <div class="petal-1"></div>
+                <div class="petal-1"></div>
+                <div class="ball"></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Preloader Area -->
+
+
+
+    <!-- Start Navbar Area -->
+    <div class="navbar-area bg-color-272b3a">
+        <div class="mobile-responsive-nav">
+            <div class="container">
+                <div class="mobile-responsive-menu">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img  src="assets/images/logo.png" class="main-logo" alt="logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="desktop-nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand" href="index.html" style="width: 455px">
+                        <img style="max-width: 57%" src="assets/images/logo.png" class="main-logo" alt="logo">
+                    </a>
+
+
+
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a th:href="@{/homeUser}" style="width: 36px" class="nav-link active">主页</a>
+                            </li>
+
+                            <li class="nav-item" >
+                                <a th:href="@{/listGood}" style="width: 40px" class="nav-link active">购物</a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/collection}" style="width: 40px" class="nav-link active">收藏</a>
+                            </li>
+                            <li class="nav-item" >
+                                <a th:href="@{/cart}" style="width: 50px" class="nav-link active">购物车</a>
+                            </li>
+                            <li class="nav-item" >
+                                <a th:href="@{/listOrder}" style="width: 40px" class="nav-link active">订单</a>
+                            </li>
+                            <li class="nav-item" >
+                                <a th:href="@{/listMyGood}" style="width: 64px" class="nav-link active">我的商品</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a th:href="@{/profileUser}" style="width: 64px" class="nav-link">个人信息</a>
+                            </li>
+                        </ul>
+
+
+                        <div class="others-options">
+                            <ul>
+
+                                <li>
+                                    <a th:href="@{/preSaveGood}" class="default-btn active">发布</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--  -->
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="others-option-for-responsive">
+            <div class="container">
+                <div class="dot-menu">
+                    <div class="inner">
+                        <div class="circle circle-one"></div>
+                        <div class="circle circle-two"></div>
+                        <div class="circle circle-three"></div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="option-inner">
+                        <div class="others-options justify-content-center">
+                            <ul>
+                                <li>
+                                    <a href="cart.html" class="cart-btn">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <span>0</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pricing.html" class="default-btn active">Get Started Now</a>
+                                </li>
+                            </ul>
+
+                            <form class="search-form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search here">
+                                    <button type="submit" class="src-btn">
+                                        <i class="ri-search-line"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Navbar Area -->
+
+
+
+    <!-- Start Solutions Area -->
+    <div class="solutions-area shape-style bg-color-linear ptb-100">
+        <div class="container">
+            <div class="section-title">
+                <!--                <span class="span color-style-three">OUR SECURITY SOLUTIONS</span>-->
+                <h2>我的收藏</h2>
+                <!--                <p>Integrate local and cloud resources, protect user traffic and endpoints, and create custom, scalable network.</p>-->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6" th:each="order:${pageInfo.list}">
+                    <div class="single-solutions style-two">
+                        <div class="row align-items-center">
+                            <div class="col-xl-6">
+                                <div class="solutions-img">
+                                    <a th:href="@{'/toGoodSingle/'+${order.gid}}">
+                                        <img th:src="'http://localhost:8088/'+${order.good.gimage}" alt="Image">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6">
+                                <div class="solutions-content">
+                                    <h3>
+                                        <a th:href="@{'/toGoodSingle/'+${order.gid}}">[[${order.good.gname}]]</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="new-price"> ￥[[${order.good.pricen}]] <del>￥[[${order.good.price}]]</del></span>
+                                    </div>
+                                    <p>库存：[[${order.good.stock}]]</p>
+                                    <div th:if="${order.good.star == 4}">
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                    </div>
+                                    <div th:if="${order.good.star == 5}">
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                    </div>
+                                    <div th:if="${order.good.star == 3}">
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                    </div>
+                                    <div th:if="${order.good.star == 2}">
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                    </div>
+                                    <div th:if="${order.good.star == 1}">
+                                        <i style="color: #d15f5f" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                    </div>
+                                    <div th:if="${order.good.star == 0}">
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                        <i style="color: #663a42" class="ri-star-fill"></i>
+                                    </div>
+
+                                    <a th:href="@{'/delCollection/'+${order.id}}" class="read-more">
+                                        取消
+                                        <i class="ri-arrow-right-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="only-shape shape-2" data-speed="0.06" data-revert="true">
+            <img src="assets/images/pricing-shape-1.png" alt="Image">
+        </div>
+        <div class="only-shape shape-4" data-speed="0.06" data-revert="true">
+            <img src="assets/images/feature-shape-1.png" alt="Image">
+        </div>
+    </div>
+    <!-- End Solutions Area -->
+
+
+    <!-- Start Footer Area -->
+    <div class="footer-area pt-100 pb-70">
+        <div class="container">
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Area -->
+
+    <!-- Start Copyright Area -->
+    <div class="copy-right-area">
+        <div class="container">
+
+        </div>
+    </div>
+    <!-- End Copyright Area -->
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="ri-arrow-up-s-fill"></i>
+        <i class="ri-arrow-up-s-fill"></i>
+    </div>
+    <!-- End Go Top Area -->
+</div>
+<!-- End For overflow-hidden & tween-animation -->
+
+<!-- Links of JS File -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/meanmenu.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<script src="assets/js/tween-max.min.js"></script>
+<script src="assets/js/appear.min.js"></script>
+<script src="assets/js/odometer.min.js"></script>
+<script src="assets/js/smoothscroll.min.js"></script>
+<script src="assets/js/magnific-popup.min.js"></script>
+<script src="assets/js/form-validator.min.js"></script>
+<script src="assets/js/contact-form-script.js"></script>
+<script src="assets/js/ajaxchimp.min.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
+</html>

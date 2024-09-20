@@ -76,8 +76,6 @@ public class Good implements Serializable {
     @TableField(exist = false)
     private Student student;
 
-
-
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

@@ -158,105 +158,51 @@
     </div>
     <!-- End Navbar Area -->
 
-    <!-- Start Banner Area -->
-    <div class="banner-area bg-2 bg-3">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <div class="banner-content style-two style-three">
-                        <!-- <h1>We Are Trusted IT & Cyber <span>Security</span> Experts Provider</h1> -->
-                        <h1>欢迎使用 <span>二手交易平台</span> 轻松购买,快乐出售,尽在校园二手交易平台</h1>
-
-
-                        <form class="banner-form">
-
-                            <a style="right: 400px" th:href="@{/listGood}" type="submit" class="default-btn">
-                                去购物
-                            </a>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="banner-img-2">
-                        <img src="assets/images/banner/banner-img-3.png" alt="Image">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="only-shape banner-shape-1" data-speed="0.04" data-revert="true">
-            <img src="assets/images/banner/banner-shape-2.png" alt="Image">
-        </div>
-        <div class="only-shape banner-shape-2" data-speed="0.06" data-revert="true">
-            <img src="assets/images/banner/banner-shape-1.png" alt="Image">
-        </div>
-        <div class="only-shape banner-shape-4" data-speed="0.08" data-revert="true">
-            <img src="assets/images/banner/banner-shape-4.png" alt="Image">
-        </div>
-        <div class="only-shape banner-shape-3" data-speed="0.08" data-revert="true">
-            <img src="assets/images/banner/banner-shape-3.png" alt="Image">
-        </div>
-    </div>
-    <!-- End Banner Area -->
-
-    <div class="bg-color-linear-4">
-        <!-- End Feature Area -->
-        <div class="feature-area pt-100 pb-70">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="single-featured style-two">
-                            <span>01.</span>
-                            <h3>价格实惠</h3>
-                            <p>我们的商品价格相对于新品更加实惠，可以让同学们以更低的成本获得所需物品。‌</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="single-featured style-two">
-                            <span>02.</span>
-                            <h3>选择多样</h3>
-                            <p>二手交易平台上的商品种类非常丰富，可以满足同学们不同的需求和兴趣。‌</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="single-featured style-two">
-                            <span>03.</span>
-                            <h3>方便快捷</h3>
-                            <p>二手交易平台可以让同学们在宿舍中就能够购买或出售物品，省去了很多时间和精力。‌</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Featured Area -->
-
-
-    </div>
 
 
     <!-- Start Products Area -->
     <div class="products-area default-shape bg-color-linear-3 ptb-100">
         <div class="container">
             <div class="section-title">
-                <h2>推荐商品</h2>
-                <p>以下是根据您的个人喜好推荐的相关商品</p>
-
+                <h2>所有商品</h2>
             </div>
 
             <div class="search-result">
                 <div class="row align-items-center">
+                    <div class="col-lg-4 col-md-4">
+                        <p>共 <span>[[${pageInfo.total}]]</span> 条数据</p>
+                    </div>
 
+                    <div class="col-lg-4 col-md-4">
+                        <form class="src-form">
+                            <input type="text" class="form-control" name="gname" placeholder="商品名称">
+                            <button type="submit" class="src-btn">
+                                <img src="assets/images/icon/search-icon.svg" alt="Image">
+                            </button>
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-4">
+                        <div class="product-selecet d-flex align-items-center">
+                            <span>分类：</span>
+                            <select class="form-select form-control" name="type" aria-label="Default select example">
+                                <option disabled="disabled" hidden="hidden"
+                                        selected="selected">--选择分类：</option>
+                                <option th:each="store : ${typeList}"
+                                        th:value="${store.type}"
+                                        th:text="${store.type}"/>
+                            </select>
+                        </div>
+                    </div>
+                    </form>
                 </div>
             </div>
 
             <div class="row justify-content-center">
 
 
-                <div class="col-lg-3 col-sm-4" th:each="good:${recommendList}">
-                    <div class="single-products" th:if="${good!=null}">
+                <div class="col-lg-3 col-sm-4" th:each="good:${pageInfo.list}">
+                    <div class="single-products">
                         <div class="product-img">
                             <a href="product-details.html">
                                 <img th:src="'http://localhost:8088/'+${good.gimage}" alt="Image">
@@ -314,12 +260,44 @@
                             </div>
                             <span>分类：[[${good.type}]]</span>
                             <span>发布人：[[${good.student.sname}]]</span>
+                            <span>库存：[[${good.stock}]]</span>
                             <h2> ￥[[${good.pricen}]]<del>￥[[${good.price}]]</del></h2>
                         </div>
                     </div>
-
-                    <p  th:if="${good==null}">您还没有进行一些商品评分，暂时还未知您的个人喜好</p>
                 </div>
+
+
+
+                <div class="col-lg-12">
+                    <div class="pagination-area">
+                        <a th:if="!${pageInfo.hasPreviousPage}" class="next page-numbers">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </a>
+                        <a th:if="${pageInfo.hasPreviousPage}" th:href="'/listGood?pageNum='+${pageInfo.prePage}" class="next page-numbers">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </a>
+
+
+
+                        <span th:each="nav:${pageInfo.navigatepageNums}">
+                            <a th:if="${nav != pageInfo.pageNum}" th:href="'/listGood?pageNum='+${nav}" th:text="${nav}" class="page-numbers"></a>
+                            <a th:if="${nav == pageInfo.pageNum}" th:text="${nav}" class="page-numbers current"></a>
+                        </span>
+
+
+
+                        <a th:if="!${pageInfo.hasNextPage}"  class="next page-numbers">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </a>
+                        <a th:if="${pageInfo.hasNextPage}" th:href="'/listGood?pageNum='+${pageInfo.nextPage}"  class="next page-numbers">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+
+
 
             </div>
         </div>
@@ -335,40 +313,20 @@
 
 
 
-    <!-- Start Privacy Policy Area -->
-    <div class="privacy-policy-area default-shape bg-color-linear-3 ptb-100">
+    <!-- Start Footer Area -->
+    <div class="footer-area pt-100 pb-70">
         <div class="container">
-            <div class="section-title">
-                <h2>系统公告</h2>
-
+            <div class="row">
 
             </div>
-            <div class="main-content-text" >
-                <div th:each="notice:${noticeList}">
-                    <h3>[[${notice.nname}]]</h3>
-                    <p>[[${notice.content}]]</p>
-
-                    <div class="gap-20"></div>
-                </div>
-
-
-            </div>
-        </div>
-
-        <div class="only-shape shape-1" data-speed="0.04" data-revert="true">
-            <img src="assets/images/team/team-shape-1.png" alt="Image">
-        </div>
-        <div class="only-shape shape-2" data-speed="0.06" data-revert="true">
-            <img src="assets/images/team/team-shape-2.png" alt="Image">
         </div>
     </div>
-    <!-- End Privacy Policy Area -->
-
-
+    <!-- End Footer Area -->
 
     <!-- Start Copyright Area -->
     <div class="copy-right-area">
         <div class="container">
+
         </div>
     </div>
     <!-- End Copyright Area -->

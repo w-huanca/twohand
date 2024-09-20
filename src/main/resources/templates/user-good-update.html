@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Links Of CSS File -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+    <link rel="stylesheet" href="assets/css/odometer.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <!-- Title -->
+    <title>校园二手交易平台</title>
+</head>
+
+<body>
+<!-- Start For overflow-hidden & tween-animation -->
+<div class="overflow-hidden tween-animation">
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="preloader-container">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal-1"></div>
+                <div class="petal-1"></div>
+                <div class="petal-1"></div>
+                <div class="ball"></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Preloader Area -->
+
+
+
+    <!-- Start Navbar Area -->
+    <div class="navbar-area bg-color-272b3a">
+        <div class="mobile-responsive-nav">
+            <div class="container">
+                <div class="mobile-responsive-menu">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img  src="assets/images/logo.png" class="main-logo" alt="logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="desktop-nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand" href="index.html" style="width: 455px">
+                        <img style="max-width: 57%" src="assets/images/logo.png" class="main-logo" alt="logo">
+                    </a>
+
+
+
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a th:href="@{/homeUser}" style="width: 36px" class="nav-link active">主页</a>
+                            </li>
+
+                            <li class="nav-item" >
+                                <a th:href="@{/listGood}" style="width: 40px" class="nav-link active">购物</a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/collection}" style="width: 40px" class="nav-link active">收藏</a>
+                            </li>
+                            <li class="nav-item" >
+                                <a th:href="@{/cart}" style="width: 50px" class="nav-link active">购物车</a>
+                            </li>
+                            <li class="nav-item" >
+                                <a th:href="@{/listOrder}" style="width: 40px" class="nav-link active">订单</a>
+                            </li>
+                            <li class="nav-item" >
+                                <a th:href="@{/listMyGood}" style="width: 64px" class="nav-link active">我的商品</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a th:href="@{/profileUser}" style="width: 64px" class="nav-link">个人信息</a>
+                            </li>
+                        </ul>
+
+
+                        <div class="others-options">
+                            <ul>
+
+                                <li>
+                                    <a th:href="@{/preSaveGood}" class="default-btn active">发布</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--  -->
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="others-option-for-responsive">
+            <div class="container">
+                <div class="dot-menu">
+                    <div class="inner">
+                        <div class="circle circle-one"></div>
+                        <div class="circle circle-two"></div>
+                        <div class="circle circle-three"></div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="option-inner">
+                        <div class="others-options justify-content-center">
+                            <ul>
+                                <li>
+                                    <a href="cart.html" class="cart-btn">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <span>0</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pricing.html" class="default-btn active">Get Started Now</a>
+                                </li>
+                            </ul>
+
+                            <form class="search-form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search here">
+                                    <button type="submit" class="src-btn">
+                                        <i class="ri-search-line"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Navbar Area -->
+
+
+
+    <!-- Start Conatct Us Area -->
+    <div class="contact-us-area default-shape bg-color-linear-5 ptb-100">
+        <div class="container">
+            <div class="section-title">
+                <h2>修改商品</h2>
+            </div>
+            <div class="row align-items-center">
+
+
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <h3>商品信息</h3>
+
+                        <form enctype="multipart/form-data" method="post" th:action="@{/updateGood}">
+                            <input name="id" th:value="${good.id}" type="hidden"/>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="gname" th:value="${good.gname}" id="name" class="form-control"  placeholder="名称">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <select class="form-control" aria-label="Default select example" name="type">
+                                            <option disabled="disabled" hidden="hidden"
+                                                    selected="selected">分类</option>
+                                            <option style="color: black"  th:each="store : ${typeList}" th:value="${store.type}" th:text="${store.type}" th:selected="${store.type eq good.type}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="price" th:value="${good.price}"  class="form-control" placeholder="原价">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="discount" th:value="${good.discount}" class="form-control" placeholder="折扣">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="stock" th:value="${good.stock}" class="form-control" placeholder="库存">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="file" name="file"  class="form-control" placeholder="图像">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <textarea name="descr" class="form-control" th:value="${good.descr}" th:text="${good.descr}"  cols="30" rows="4"  placeholder="描述"></textarea>
+                                        <div class="help-block with-errors" ></div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-lg-12 col-md-12">
+                                    <button type="submit" class="default-btn">
+                                        修改
+                                    </button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="only-shape shape-1" data-speed="0.04" data-revert="true">
+            <img src="assets/images/team/team-shape-1.png" alt="Image">
+        </div>
+        <div class="only-shape shape-2" data-speed="0.06" data-revert="true">
+            <img src="assets/images/team/team-shape-2.png" alt="Image">
+        </div>
+    </div>
+    <!-- End Conatct Us Area -->
+
+
+
+    <!-- Start Footer Area -->
+    <div class="footer-area pt-100 pb-70">
+        <div class="container">
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Area -->
+
+    <!-- Start Copyright Area -->
+    <div class="copy-right-area">
+        <div class="container">
+
+        </div>
+    </div>
+    <!-- End Copyright Area -->
+
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="ri-arrow-up-s-fill"></i>
+        <i class="ri-arrow-up-s-fill"></i>
+    </div>
+    <!-- End Go Top Area -->
+</div>
+<!-- End For overflow-hidden & tween-animation -->
+
+<!-- Links of JS File -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/meanmenu.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<script src="assets/js/tween-max.min.js"></script>
+<script src="assets/js/appear.min.js"></script>
+<script src="assets/js/odometer.min.js"></script>
+<script src="assets/js/smoothscroll.min.js"></script>
+<script src="assets/js/magnific-popup.min.js"></script>
+<script src="assets/js/form-validator.min.js"></script>
+<script src="assets/js/contact-form-script.js"></script>
+<script src="assets/js/ajaxchimp.min.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
+</html>

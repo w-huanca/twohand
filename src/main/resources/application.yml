@@ -20,7 +20,7 @@ spring:
       max-request-size: 100MB
 mybatis-plus:
   configuration:
-    map-underscore-to-camel-case: false
+    map-underscore-to-camel-case: true # 开启驼峰映射，可以在实体类中使用驼峰式命名法映射数据库中含下划线的字段
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #pagehelper:
 #  helper-dialect: mysql

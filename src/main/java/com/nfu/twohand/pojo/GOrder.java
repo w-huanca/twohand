@@ -36,7 +36,7 @@ public class GOrder implements Serializable {
      * 下单日期
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date order_time;
+    private Date orderTime;
 
     /**
      * 订单总额

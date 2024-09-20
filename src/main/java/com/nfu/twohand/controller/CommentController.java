@@ -26,7 +26,7 @@ public class CommentController {
     public String comment(Model model){
         List<Comment> list = commentService.list();
         for (Comment comment : list) {
-            Good good = goodService.getById(comment.getGood_id());
+            Good good = goodService.getById(comment.getGoodId());
             comment.setGood(good);
         }
         model.addAttribute("commentList",list);

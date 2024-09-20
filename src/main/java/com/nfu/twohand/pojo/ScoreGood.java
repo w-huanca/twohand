@@ -18,12 +18,12 @@ public class ScoreGood implements Serializable {
     /**
      * 
      */
-    private Integer user_id;
+    private Integer userId;
 
     /**
      * 
      */
-    private Integer good_id;
+    private Integer goodId;
 
     /**
      * 

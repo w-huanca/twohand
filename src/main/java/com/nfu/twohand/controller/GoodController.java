@@ -149,9 +149,4 @@ public class GoodController {
         }
         good.setGimage(path);
     }
-
-    @RequestMapping("listGood")
-    public String listGood(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize, Model model) {
-
-    }
 }
