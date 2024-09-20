@@ -421,20 +421,29 @@ public class UserController {
         model.addAttribute("pageInfo", pageInfo);
 
         // 查询当前用户已卖出的商品
+        // 1. 查询已经支付的订单
         QueryWrapper<GOrder> qw1 = new QueryWrapper<>();
-        qw1.eq("isorder", 0);
+        qw1.eq("isorder", 1);
         List<GOrder> list1 = orderService.list(qw1);
-        List<GOrder> list2 = new ArrayList<>();
+        // 2. 根据订单的用户ID查询用户（买家）
+        for (GOrder order : list1) {
+            Student student = studentService.getById(order.getSid());
+            order.setStudent(student);
+        }
+        // 3. 根据订单的商品ID查询商品
         for (GOrder order : list1) {
             Good good = goodService.getById(order.getGid());
-            if (!userId.equals(good.getSid())) {
-                Student student = studentService.getById(good.getSid());
-                order.setStudent(student);
-                order.setGood(good);
-                list2.add(order);
+            order.setGood(good);
+        }
+        // 4. 根据商品的用户ID与当前用户ID进行对比，如果相等，则添加到list2中
+//        List<GOrder> list2 = new ArrayList<>();
+        for (GOrder order : list1) {
+            if (!userId.equals(order.getGood().getSid())) {
+//                list2.add(order);
+                list.remove(order);
             }
         }
-        PageInfo<GOrder> pageInfo1 = new PageInfo<>(list2);
+        PageInfo<GOrder> pageInfo1 = new PageInfo<>(list1);
         model.addAttribute("pageInfo1", pageInfo1);
 
         return "user-order-list";
