@@ -35,6 +35,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         String pwd = DigestUtil.md5Hex(password);
         return Objects.equals(pwd, student.getPassword());
     }
+
+    @Override
+    public String generateVerificationCode() {
+        // 生成6位随机数字验证码
+        int verificationCode = (int) ((Math.random() * 9 + 1) * 100000);  // 6位验证码
+        return String.valueOf(verificationCode);
+    }
 }
 
 

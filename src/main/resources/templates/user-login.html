@@ -22,6 +22,18 @@
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <!-- Title -->
     <title>校园二手交易平台</title>
+
+    <style>
+        .toggle-login h2.active {
+            color: #266fe2;
+        }
+
+        #phoneError, #smsCodeError {
+            color: red;
+            font-size: 14px;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -48,8 +60,6 @@
     </div>
     <!-- End Preloader Area -->
 
-
-
     <!-- Start Navbar Area -->
     <div class="navbar-area bg-color-272b3a">
         <div class="mobile-responsive-nav">
@@ -74,44 +84,13 @@
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a href="#" >
-
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-
-                                    </li>
-                                    <li class="nav-item">
-
-                                    </li>
-                                    <li class="nav-item">
-
-                                    </li>
-                                </ul>
+                                <a href="#" ></a>
                             </li>
-
+                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>
                             <li class="nav-item">
-
-
-
-                            </li>
-
-                            <li class="nav-item">
-
-
-
-                            </li>
-
-                            <li class="nav-item">
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" >
-
-                                </a>
-
+                                <a href="#" ></a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
                                         <a href="blog.html" class="nav-link"></a>
@@ -126,8 +105,6 @@
                                 <a href="contact-us.html" class="nav-link"></a>
                             </li>
                         </ul>
-
-
                     </div>
                 </nav>
             </div>
@@ -176,8 +153,6 @@
 
     <!-- Start Page Banner Area -->
     <div class="banner-page-area">
-
-
         <div class="only-shape banner-shape-1" data-speed="0.04" data-revert="true">
             <img src="assets/images/banner/banner-shape-2.png" alt="Image">
         </div>
@@ -195,41 +170,64 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 " style="margin: 0 auto;">
-                    <form th:action="@{/userlogin}" class="login-register-form-area login mr-15">
-                        <h2>登录</h2>
+                    <!-- Tabs for switching between "Password Login" and "SMS Login" -->
+                    <div class="toggle-login" style="text-align: center; margin-bottom: 20px;">
+                        <h2 id="toggle-password-login" class="active" onclick="showLogin('password')" style="cursor: pointer; display: inline-block; margin-right: 20px;">密码登录</h2>
+                        <h2 id="toggle-sms-login" onclick="showLogin('sms')" style="cursor: pointer; display: inline-block;">短信登录</h2>
+                    </div>
+
+                    <!-- Password Login Form -->
+                    <form id="passwordLoginForm" th:action="@{/userlogin}" method="post" class="login-register-form-area login mr-15">
+                        <div th:if="${msg}" style="color: red; font-size: 14px; margin-bottom: 15px;">
+                            <p th:text="${msg}"></p>
+                        </div>
                         <div class="form-group">
                             <label>用户名</label>
-                            <input type="text" class="form-control" placeholder="用户名" name="username">
+                            <input type="text" class="form-control" placeholder="用户名" name="username" id="usernameInput" >
                         </div>
                         <div class="form-group">
                             <label>密码</label>
-                            <input type="password" class="form-control" placeholder="密码" name="password">
+                            <input type="password" class="form-control" placeholder="密码" name="password" id="passwordInput">
                         </div>
-
-                        <div class="form-group">
-                            <div class="forgot d-flex justify-content-between align-items-center">
-                                <div class="form-check">
-
-                                </div>
-                                <div class="form-check">
-                                    还没有账号？<a th:href="@{/toRegister}">去注册</a>
-                                </div>
-                            </div>
+                        <div class="form-group" style="text-align: right;">
+                            <a th:href="@{/forgotPassword}" style="text-decoration: none;">忘记密码？</a>
                         </div>
-                        <p style="color:red"
-                           th:if="${not #strings.isEmpty(msg)}"
-                           th:text="${msg}">
-                            <!--这个msg既可以是model里的，也可以是session里的-->
-                        </p>
                         <div class="d-flex align-items-center">
-                            <button type="submit" class="default-btn">
-                                登录
-                            </button>
+                            <button type="submit" class="default-btn" style="margin-top: -20px;">登录</button>
+                        </div>
+                        <div class="form-group" style="text-align: right; margin-top: 20px;">
+                            还没有账号？<a th:href="@{/toRegister}" style="text-decoration: none;">去注册</a>
+                        </div>
+                    </form>
+
+                    <!-- SMS Login Form -->
+                    <form id="smsLoginForm" th:action="@{/smsLogin}" method="post" class="login-register-form-area login mr-15" style="display: none;">
+                        <div th:if="${msg}" style="color: red; font-size: 14px; margin-bottom: 15px;">
+                            <p th:text="${msg}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>手机号</label>
+                            <input type="text" class="form-control" placeholder="手机号" id="phoneInput" name="phone" >
+                            <!-- 显示手机号错误提示 -->
+                            <div id="phoneError" style="color: red; font-size: 14px;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>验证码</label>
+                            <div class="d-flex">
+                                <input type="text" class="form-control" placeholder="验证码" name="smsCode" id="smsCodeInput" >
+                                <button type="button" id="getVerificationCode" class="default-btn" style="margin-left: 10px;" onclick="startCountdown()">获取验证码</button>
+                            </div>
+                            <!-- 显示验证码错误提示 -->
+                            <div id="smsCodeError" style="color: red; font-size: 14px;"></div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button type="submit" class="default-btn" style="margin-top: 10px;">登录</button>
+                        </div>
+                        <div class="form-group" style="text-align: right; margin-top: 20px;">
+                            还没有账号？<a th:href="@{/toRegister}" style="text-decoration: none;">去注册</a>
                         </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
 
@@ -238,47 +236,106 @@
     </div>
     <!-- End My Account Area -->
 
-
-
     <!-- Start Footer Area -->
-    <div class="footer-area pt-100 pb-70">
+    <footer class="footer-area bg-color-272b3a">
         <div class="container">
             <div class="row">
-
+                <!-- Footer content goes here -->
             </div>
         </div>
-    </div>
-    <!-- End Footer Area -->
-
-    <!-- Start Copyright Area -->
-    <div class="copy-right-area">
-        <div class="container">
-        </div>
-    </div>
-    <!-- End Copyright Area -->
-
-    <!-- Start Go Top Area -->
-    <div class="go-top">
-        <i class="ri-arrow-up-s-fill"></i>
-        <i class="ri-arrow-up-s-fill"></i>
-    </div>
-    <!-- End Go Top Area -->
+    </footer>
 </div>
-<!-- End For overflow-hidden & tween-animation -->
+<!-- End Footer Area -->
 
 <!-- Links of JS File -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/meanmenu.min.js"></script>
 <script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/tween-max.min.js"></script>
+<script src="assets/js/magnific-popup.min.js"></script>
 <script src="assets/js/appear.min.js"></script>
 <script src="assets/js/odometer.min.js"></script>
-<script src="assets/js/smoothscroll.min.js"></script>
-<script src="assets/js/magnific-popup.min.js"></script>
-<script src="assets/js/form-validator.min.js"></script>
-<script src="assets/js/contact-form-script.js"></script>
-<script src="assets/js/ajaxchimp.min.js"></script>
+<script src="assets/js/meanmenu.min.js"></script>
 <script src="assets/js/custom.js"></script>
+<!-- JavaScript for switching between login forms -->
+<script>
+    // 切换登录方式
+    function showLogin(type) {
+        if (type === 'password') {
+            document.getElementById("passwordLoginForm").style.display = "block";
+            document.getElementById("smsLoginForm").style.display = "none";
+
+            // 切换颜色样式
+            document.getElementById("toggle-password-login").classList.add("active");
+            document.getElementById("toggle-sms-login").classList.remove("active");
+        } else {
+            document.getElementById("passwordLoginForm").style.display = "none";
+            document.getElementById("smsLoginForm").style.display = "block";
+
+            // 切换颜色样式
+            document.getElementById("toggle-password-login").classList.remove("active");
+            document.getElementById("toggle-sms-login").classList.add("active");
+        }
+    }
+
+    // 初始化倒计时功能
+    function startCountdown() {
+        var phoneInput = document.getElementById("phoneInput").value;
+
+        // 检查手机号是否为空
+        if (!phoneInput) {
+            document.getElementById("phoneError").innerText = "手机号不能为空";
+            return;
+        } else {
+            document.getElementById("phoneError").innerText = ""; // 清除错误信息
+        }
+
+        // 调用发送验证码功能
+        sendVerificationCode();
+
+        var countdown = 60;
+        var button = document.getElementById("getVerificationCode");
+
+        // 禁用按钮并启动倒计时
+        button.disabled = true;
+        button.innerText = countdown + "秒后重新获取";
+
+        var interval = setInterval(function() {
+            countdown--;
+            button.innerText = countdown + "秒后重新获取";
+
+            // 当倒计时结束时，恢复按钮状态
+            if (countdown === 0) {
+                clearInterval(interval);
+                button.disabled = false;
+                button.innerText = "获取验证码";
+            }
+        }, 1000); // 每秒更新倒计时
+    }
+
+    // 发送验证码的AJAX请求
+    function sendVerificationCode() {
+        var phoneInput = document.getElementById("phoneInput").value;
+
+        // 发送 AJAX 请求到后端
+        $.ajax({
+            url: '/sendVerificationCode', // 确保这个URL与后端一致
+            method: 'POST',
+            data: { phone: phoneInput },
+            success: function(response) {
+                // 如果后端返回成功消息
+                if (response.msg) {
+                    alert(response.msg); // 显示发送成功的消息
+                }
+            },
+            error: function(xhr, status, error) {
+                // 处理请求错误
+                console.error(error);
+                alert("发送验证码失败，请重试");
+            }
+        });
+    }
+</script>
+
+<!-- End For overflow-hidden & tween-animation -->
 </body>
 </html>

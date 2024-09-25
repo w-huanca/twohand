@@ -11,4 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface StudentService extends IService<Student> {
 
     boolean login(String username, String password);
+
+    // 生成验证码的方法（6位数字）
+    String generateVerificationCode();
 }
