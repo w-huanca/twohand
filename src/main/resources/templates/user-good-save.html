@@ -56,7 +56,7 @@
             <div class="container">
                 <div class="mobile-responsive-menu">
                     <div class="logo">
-                        <a href="index.html">
+                        <a th:href="@{/toAdminlogin}">
                             <img  src="assets/images/logo.png" class="main-logo" alt="logo">
                         </a>
                     </div>
@@ -67,7 +67,7 @@
         <div class="desktop-nav">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-md navbar-light">
-                    <a class="navbar-brand" href="index.html" style="width: 455px">
+                    <a class="navbar-brand" th:href="@{/toAdminlogin}" style="width: 455px">
                         <img style="max-width: 57%" src="assets/images/logo.png" class="main-logo" alt="logo">
                     </a>
 
@@ -82,20 +82,19 @@
                             <li class="nav-item" >
                                 <a th:href="@{/listGood}" style="width: 40px" class="nav-link active">购物</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" th:if="${session.currentUser}!=null">
                                 <a th:href="@{/collection}" style="width: 40px" class="nav-link active">收藏</a>
                             </li>
-                            <li class="nav-item" >
+                            <li class="nav-item" th:if="${session.currentUser}!=null">
                                 <a th:href="@{/cart}" style="width: 50px" class="nav-link active">购物车</a>
                             </li>
-                            <li class="nav-item" >
+                            <li class="nav-item" th:if="${session.currentUser}!=null">
                                 <a th:href="@{/listOrder}" style="width: 40px" class="nav-link active">订单</a>
                             </li>
-                            <li class="nav-item" >
+                            <li class="nav-item" th:if="${session.currentUser}!=null">
                                 <a th:href="@{/listMyGood}" style="width: 64px" class="nav-link active">我的商品</a>
                             </li>
-
-                            <li class="nav-item">
+                            <li class="nav-item" th:if="${session.currentUser}!=null">
                                 <a th:href="@{/profileUser}" style="width: 64px" class="nav-link">个人信息</a>
                             </li>
                         </ul>
@@ -103,8 +102,10 @@
 
                         <div class="others-options">
                             <ul>
-
-                                <li>
+                                <li th:if="${session.currentUser}==null">
+                                    <a th:href="@{/login}" class="default-btn active">登录</a>
+                                </li>
+                                <li th:if="${session.currentUser}!=null">
                                     <a th:href="@{/preSaveGood}" class="default-btn active">发布</a>
                                 </li>
                             </ul>

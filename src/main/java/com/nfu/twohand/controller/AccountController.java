@@ -49,6 +49,16 @@ public class AccountController {
     @Value("${location}")
     private String location;
 
+    @RequestMapping("/")
+    public String index() {
+        return "redirect:/homeUser";
+    }
+
+    @RequestMapping("/toAdminlogin")
+    public String toAdminLogin() {
+        return "admin-login";
+    }
+
     @RequestMapping("/login")
     public String login() {
         return "user-login";
@@ -56,7 +66,7 @@ public class AccountController {
 
     @RequestMapping("/logout")
     public String logout() {
-        return "index";
+        return "admin-login";
     }
 
     @GetMapping("/toLogin")
@@ -92,7 +102,7 @@ public class AccountController {
         if (user == null) {
             // 用户名不存在
             model.addAttribute("msg", "用户名不存在");
-            return "index";
+            return "admin-login";
         }
 
         // 用户名存在，验证密码
@@ -121,7 +131,7 @@ public class AccountController {
         } else {
             // 密码错误
             model.addAttribute("msg", "密码错误");
-            return "index";
+            return "admin-login";
         }
     }
 
@@ -177,8 +187,7 @@ public class AccountController {
                     model.addAttribute("msg", 1);
                 }
             }
-
-            return "user-home";
+            return "index";
         } else {
             // 密码错误
             model.addAttribute("msg", "密码错误");
@@ -265,7 +274,7 @@ public class AccountController {
             session.setAttribute("phone", student.getPhone());
             session.setAttribute("image", student.getSimage());
             model.addAttribute("msg", "登录成功");
-            return "user-home";  // 登录成功，返回用户主页
+            return "index";  // 登录成功，返回用户主页
         }
     }
 
@@ -378,7 +387,7 @@ public class AccountController {
         }
         List<Notice> list = noticeService.list();
         model.addAttribute("noticeList", list);
-        return "user-home";
+        return "index";
     }
 
     public List<Good> getRecommend(List<RecommendedItem> list) {
@@ -467,6 +476,11 @@ public class AccountController {
     @RequestMapping("profileUser")
     public String profileUser(HttpSession session, Model model) {
         String currentUser = (String) session.getAttribute("currentUser");
+        if (currentUser == null || "".equals(currentUser)) {
+            // model.addAttribute("alertMessage", "请先登录。");
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/login";
+        }
         String password = (String) session.getAttribute("password");
         QueryWrapper<Student> qw = new QueryWrapper<>();
         qw.eq("sname", currentUser);

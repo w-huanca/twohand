@@ -115,6 +115,10 @@ public class UserController {
         String image = (String) session.getAttribute("image");
         Integer goodId = (Integer) session.getAttribute("goodId");
         Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/toGoodSingle/" + goodId;
+        }
         comment.setCustomer(currentUser);
         comment.setCimage(image);
         comment.setCommentTime(new Date());
@@ -177,6 +181,10 @@ public class UserController {
         }
         PageHelper.startPage(pageNum, pageSize);
         Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/login";
+        }
         Student student = studentService.getById(userId);
         // 获取当前用户的收藏的商品
         QueryWrapper<GOrder> qw = new QueryWrapper<>();
@@ -203,8 +211,8 @@ public class UserController {
     public String foodToCollection(@PathVariable Integer foodId, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            session.setAttribute("msg", "请先登录");
-            return "redirect:/login";
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/toGoodSingle/" + foodId;
         } else {
             System.out.println(">>>>>>>>>> 当前用户为：" + userId);
         }
@@ -241,7 +249,7 @@ public class UserController {
     public String cart(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            session.setAttribute("msg", "请先登录");
+            session.setAttribute("msg", "您暂未登录，请先登录！");
             return "redirect:/login";
         } else {
             System.out.println(">>>>>>>>>> 当前用户为：" + userId);
@@ -271,7 +279,7 @@ public class UserController {
     public String payOrder(HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            session.setAttribute("msg", "请先登录");
+            session.setAttribute("msg", "您暂未登录，请先登录！");
             return "redirect:/login";
         }
         Student student = studentService.getById(userId);
@@ -301,6 +309,10 @@ public class UserController {
     public String foodToCart(Integer goodId, Integer count, HttpSession session) {
         Integer gid = (Integer) session.getAttribute("goodId");
         Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/toGoodSingle/" + gid;
+        }
         QueryWrapper<GOrder> qw = new QueryWrapper<>();
         qw.eq("sid", userId);
         qw.eq("gid", goodId);
@@ -401,7 +413,7 @@ public class UserController {
         }
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            session.setAttribute("msg", "请先登录");
+            session.setAttribute("msg", "您暂未登录，请先登录！");
             return "redirect:/login";
         }
         PageHelper.startPage(pageNum, pageSize);
@@ -505,6 +517,10 @@ public class UserController {
             pageSize = 8;
         }
         Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/login";
+        }
         PageHelper.startPage(pageNum, pageSize);
         QueryWrapper<Good> qw = new QueryWrapper<>();
         qw.eq("sid", userId);
@@ -588,6 +604,10 @@ public class UserController {
             transfile(good, file);
         }
         Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            session.setAttribute("msg", "您暂未登录，请先登录！");
+            return "redirect:/login";
+        }
         if (good.getPricen() != null && good.getDiscount() != null) {
             good.setPricen(good.getPricen() * good.getDiscount());
         }
