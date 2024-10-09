@@ -23925,7 +23925,7 @@ button {
 
 .sharp.btn-xs {
   padding: 0.1875rem;
-  width: 1.625rem;
+  /*width: 1.625rem;*/
   height: 1.625rem;
   min-width: 1.625rem;
   min-height: 1.625rem; }

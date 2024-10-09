@@ -123,4 +123,46 @@ public class StudentController {
             return "error";
         }
     }
+
+    // 启用用户
+    @RequestMapping("isdisable/{id}")
+    public String isDisable(@PathVariable Integer id) {
+        Student student = studentService.getById(id);
+        student.setDisable(1);
+        boolean update = studentService.updateById(student);
+        return "redirect:/student/listStudent";
+    }
+
+    // 禁用用户
+    @RequestMapping("notdisable/{id}")
+    public String notDisable(@PathVariable Integer id) {
+        Student student = studentService.getById(id);
+        student.setDisable(0);
+        boolean update = studentService.updateById(student);
+        return "redirect:/student/listStudent";
+    }
+
+    @ResponseBody
+    @RequestMapping("batchIsDisable")
+    public String batchIsDisable(String idList) {
+        List<String> split = StrUtil.split(idList, ","); //将字符串转换为数组
+        List<Integer> list = new ArrayList<>();
+        for (String s : split) {
+            if (!s.isEmpty()) {
+                list.add(Integer.valueOf(s));
+            }
+        }
+        List<Student> studentList = new ArrayList<>();
+        for (Integer integer : list) {
+            Student student = studentService.getById(integer);
+            student.setDisable(1);
+            studentList.add(student);
+        }
+        boolean b = studentService.updateBatchById(studentList);
+        if (b) {
+            return "OK";
+        } else {
+            return "error";
+        }
+    }
 }

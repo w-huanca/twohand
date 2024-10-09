@@ -241,7 +241,7 @@
                                         </svg>
                                         </a>
 
-                                        <button class="btn btn-danger" type="button" id="batchDelete">批量删除</button>
+                                        <button class="btn btn-danger" type="button" id="batchDelete">批量禁用</button>
                                     </div>
                                 </div>
                             </div>
@@ -354,6 +354,7 @@
                                                 <th>手机</th>
                                                 <th>邮箱</th>
                                                 <th>住址</th>
+                                                <th>状态</th>
                                                 <th>操作</th>
                                             </tr>
                                             </thead>
@@ -377,9 +378,15 @@
                                                 <td><strong>[[${student.email}]]</strong></td>
                                                 <td><strong>[[${student.address}]]</strong></td>
                                                 <td>
-                                                    <div class="d-flex">
-                                                        <a th:href="@{'/student/preUpdateStudent/'+${student.id}}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                        <a th:href="@{'/student/delStudent/'+${student.id}}" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                    <strong th:if="${student.disable}==0">正常</strong>
+                                                    <strong th:if="${student.disable}!=0">禁用</strong>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex" th:if="${student.disable}==0">
+                                                        <a th:href="@{'/student/isdisable/'+${student.id}}" class="btn btn-danger shadow btn-xs sharp"><i class="fa-duotone fa-solid fa-ghost"></i>&nbsp;禁用</a>
+                                                    </div>
+                                                    <div class="d-flex" th:if="${student.disable}!=0">
+                                                        <a th:href="@{'/student/notdisable/'+${student.id}}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa-duotone fa-solid fa-ghost"></i>&nbsp;启用</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -604,7 +611,7 @@
 <script th:src="@{/js/custom.min.js}"></script>
 <script th:src="@{/js/demo-2.js}"></script>
 <script th:src="@{/js/styleSwitcher.js}"></script>
-<!--批量删除-->
+<!--批量禁用-->
 <script>
     $(function () {
         $("#selectAll").click(function () {
@@ -623,17 +630,17 @@
                 ids += ","+id;
             })
             $.ajax({
-                url:'/student/batchDeleteStudent',
+                url:'/student/batchIsDisable',
                 data:{
                     idList:ids
                 },
                 method:'POST',
                 success:function (data) {
                     if (data == "OK"){
-                        alert("批量删除成功");
+                        alert("批量禁用成功");
                         window.location.href ="/student/listStudent";
                     }else {
-                        alert("批量删除失败");
+                        alert("批量禁用失败");
                     }
                 }
             })

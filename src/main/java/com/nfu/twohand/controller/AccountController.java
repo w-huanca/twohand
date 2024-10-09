@@ -149,13 +149,18 @@ public class AccountController {
             return "user-login";
         }
 
-        // 查询用户名是否存在
         QueryWrapper<Student> qw = new QueryWrapper<>();
         qw.eq("sname", username);
         Student student = studentService.getOne(qw);
+        // 查询用户名是否存在
         if (student == null) {
             // 用户名不存在
             model.addAttribute("msg", "用户名不存在");
+            return "user-login";
+        }
+        // 查询用户是否禁用
+        if (student.getDisable() == 1) {
+            model.addAttribute("msg", "该用户已被禁用");
             return "user-login";
         }
 
@@ -259,7 +264,11 @@ public class AccountController {
             model.addAttribute("msg", "手机号不存在");
             return "user-login";
         }
-
+        // 查询用户是否禁用
+        if (student.getDisable() == 1) {
+            model.addAttribute("msg", "该用户已被禁用");
+            return "user-login";
+        }
         // 验证用户输入的验证码是否正确
         if (!smsCode.equals(generatedCode)) {
             // 验证码错误

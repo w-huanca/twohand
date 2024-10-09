@@ -16,12 +16,13 @@
             <result property="phone" column="phone" jdbcType="VARCHAR"/>
             <result property="email" column="email" jdbcType="VARCHAR"/>
             <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="disable" column="disable" javaType="INTEGER" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,sname,password,
         sex,age,major,
         college,simage,phone,
-        email,address
+        email,address,disable
     </sql>
 </mapper>
