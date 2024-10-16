@@ -326,6 +326,9 @@ public class UserController {
         if (count > byId.getStock()) {
             session.setAttribute("msg", "库存不足");
             return "redirect:/toGoodSingle/" + gid;
+        } else if (count <= 0) {
+            session.setAttribute("msg", "数量不能小于等于0");
+            return "redirect:/toGoodSingle/" + gid;
         }
         Good food = goodService.getById(goodId);
         GOrder order = new GOrder();

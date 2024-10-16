@@ -2,7 +2,7 @@
 
 	'use strict';
 	// Mean Menu
-    // ¸ü¶à¸ß¶ËÍøÕ¾¿ò¼Ü£ºhttp://www.bootstrapmb.com
+    // ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½Ü£ï¿½http://www.bootstrapmb.com
 	$('.mean-menu').meanmenu({
 		meanScreenWidth: "991"
 	});
@@ -293,33 +293,44 @@
 
 	// Input Plus & Minus Number JS
 	$('.input-counter').each(function() {
-		var spinner = jQuery(this),
-		input = spinner.find('input[type="text"]'),
-		btnUp = spinner.find('.plus-btn'),
-		btnDown = spinner.find('.minus-btn'),
-		min = input.attr('min'),
-		max = input.attr('max');
-		
+		const spinner = jQuery(this),
+			input = spinner.find('input[type="text"]'),
+			btnUp = spinner.find('.plus-btn'),
+			btnDown = spinner.find('.minus-btn'),
+			min = input.attr('min'),
+			max = input.attr('max');
+
 		btnUp.on('click', function() {
-			var oldValue = parseFloat(input.val());
+			let newVal;
+			const oldValue = parseFloat(input.val());
 			if (oldValue >= max) {
-				var newVal = oldValue;
+				newVal = oldValue;
+				alert(newVal);
 			} else {
-				var newVal = oldValue + 1;
+				newVal = oldValue + 1;
+				alert(newVal);
 			}
 			spinner.find("input").val(newVal);
 			spinner.find("input").trigger("change");
 		});
 		btnDown.on('click', function() {
-			var oldValue = parseFloat(input.val());
+			let newVal;
+			const oldValue = parseFloat(input.val());
 			if (oldValue <= min) {
-				var newVal = oldValue;
+				newVal = oldValue;
+				console.log(">>>>>>>> newVal=", newVal);
+				alert(newVal);
+			} else if (oldValue < 1) {
+				newVal = 1;
+				console.log(">>>>>>>> newVal=", newVal);
+				alert(newVal);
 			} else {
-				var newVal = oldValue - 1;
+				newVal = oldValue - 1;
+				console.log(">>>>>>>> newVal=", newVal);
+				alert(newVal);
 			}
 			spinner.find("input").val(newVal);
 			spinner.find("input").trigger("change");
 		});
 	});
-	
 })(jQuery);

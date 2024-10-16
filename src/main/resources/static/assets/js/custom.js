@@ -2,7 +2,7 @@
 
 	'use strict';
 	// Mean Menu
-    // ����߶���վ��ܣ�http://www.bootstrapmb.com
+    // ����߶���վ��ܣ�http://www.bootstrapmb.com
 	$('.mean-menu').meanmenu({
 		meanScreenWidth: "991"
 	});
@@ -293,33 +293,45 @@
 
 	// Input Plus & Minus Number JS
 	$('.input-counter').each(function() {
-		var spinner = jQuery(this),
-		input = spinner.find('input[type="text"]'),
-		btnUp = spinner.find('.plus-btn'),
-		btnDown = spinner.find('.minus-btn'),
-		min = input.attr('min'),
-		max = input.attr('max');
-		
+		const spinner = jQuery(this),
+			// 类型为text的input元素，命名为input
+			input = spinner.find('input[type="text"]'),
+			// 类名为plus-btn的元素，命名为btnUp
+			btnUp = spinner.find('.plus-btn'),
+			// 类名为minus-btn的元素，命名为btnDown
+			btnDown = spinner.find('.minus-btn'),
+			// 获取input元素的min属性值
+			min = input.attr('min'),
+			// 获取input元素的max属性值
+			max = input.attr('max');
+
+		// 为btnUp元素添加click事件监听器, 当用户点击btnUp时，将执行该函数
 		btnUp.on('click', function() {
-			var oldValue = parseFloat(input.val());
+			let newVal;
+			// 将input元素的值转换为浮点数, 命名为oldValue
+			const oldValue = parseFloat(input.val());
+			// 判断oldValue是否大于或等于max。如果是，则将newVal设为oldValue；否则，将newVal设为oldValue + 1
 			if (oldValue >= max) {
-				var newVal = oldValue;
+				newVal = oldValue;
 			} else {
-				var newVal = oldValue + 1;
+				newVal = oldValue + 1;
 			}
+			// 将input元素的值设为newVal
 			spinner.find("input").val(newVal);
+			// 触发input元素的change事件
 			spinner.find("input").trigger("change");
 		});
+		// 为btnDown元素添加click事件监听器, 当用户点击btnDown时，将执行该函数
 		btnDown.on('click', function() {
-			var oldValue = parseFloat(input.val());
-			if (oldValue <= min) {
-				var newVal = oldValue;
+			let newVal;
+			const oldValue = parseFloat(input.val());
+			if (oldValue < min) {
+				newVal = oldValue;
 			} else {
-				var newVal = oldValue - 1;
+				newVal = oldValue - 1;
 			}
 			spinner.find("input").val(newVal);
 			spinner.find("input").trigger("change");
 		});
 	});
-	
 })(jQuery);
