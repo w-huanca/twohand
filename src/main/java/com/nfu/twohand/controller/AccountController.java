@@ -65,8 +65,11 @@ public class AccountController {
     }
 
     @RequestMapping("/logout")
-    public String logout() {
-        return "admin-login";
+    public String logout(HttpSession session, Model model) {
+        // 清除session
+        session.invalidate();
+        // 重定向到首页
+        return "redirect:/homeUser";
     }
 
     @GetMapping("/toLogin")
