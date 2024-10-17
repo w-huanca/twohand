@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -241,6 +242,7 @@ public class UserController {
 
     /**
      * 购物车
+     *
      * @param session
      * @param model
      * @return
@@ -269,8 +271,16 @@ public class UserController {
         for (GOrder order : list) {
             a += order.getTotal();
         }
+
+        // 创建BigDecimal对象
+        BigDecimal bd = new BigDecimal(Double.toString(a));
+        // 设置小数点后两位
+        bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+        // 转换回double
+        double roundedValue = bd.doubleValue();
+
         PageInfo<GOrder> pageInfo = new PageInfo<>(list);
-        model.addAttribute("totalMoney", a);
+        model.addAttribute("totalMoney", roundedValue);
         model.addAttribute("pageInfo", pageInfo);
         return "user-cart";
     }
@@ -300,6 +310,7 @@ public class UserController {
 
     /**
      * 购物车添加商品
+     *
      * @param goodId
      * @param count
      * @param session
@@ -345,6 +356,7 @@ public class UserController {
 
     /**
      * 加购/减购
+     *
      * @param orderId
      * @param count
      * @return
@@ -353,26 +365,36 @@ public class UserController {
     @RequestMapping("/updateOrder")
     public String updateOrder(String orderId, String count) {
         log.info("a");
+        // 当前订单对象
         GOrder order = orderService.getById(orderId);
+        // 订单的原加购数量
         Integer oldCount = order.getCount();
+        // 订单的商品id
         Integer gid = order.getGid();
+        // 根据订单中商品id获取的商品对象
         Good good = goodService.getById(gid);
+        // 商品的单价
         Double price = good.getPricen();
-        order.setId(Integer.valueOf(orderId));
+        // 新的加购数量
         Integer a = Integer.valueOf(count);
+        // 返回的状态结果
+        String result = "";
+        order.setId(Integer.valueOf(orderId));
         order.setCount(a);
         order.setTotal(price * a);
         boolean b = orderService.updateById(order);
+
         // 修改库存
         log.info(oldCount + "");
         log.info(count + "");
         if (oldCount > a) {
             good.setStock(good.getStock() + (oldCount - a));
             goodService.updateById(good);
-        } else {
+        } else if (oldCount < a) {
             good.setStock(good.getStock() - (a - oldCount));
             goodService.updateById(good);
         }
+
         if (b) {
             return "OK";
         } else {
@@ -382,6 +404,7 @@ public class UserController {
 
     /**
      * 删除购物车
+     *
      * @param orderId
      * @param session
      * @return
@@ -398,6 +421,7 @@ public class UserController {
 
     /**
      * 查看当前用户订单以及已出售商品
+     *
      * @param pageNum
      * @param pageSize
      * @param model
@@ -465,7 +489,6 @@ public class UserController {
     }
 
     /**
-     *
      * @param orderId
      * @return
      */
@@ -478,7 +501,6 @@ public class UserController {
     }
 
     /**
-     *
      * @param orderId
      * @return
      */
@@ -492,6 +514,7 @@ public class UserController {
 
     /**
      * 删除我的订单
+     *
      * @param id
      * @return
      */
@@ -503,6 +526,7 @@ public class UserController {
 
     /**
      * 我发布的商品
+     *
      * @param pageNum
      * @param pageSize
      * @param model
@@ -585,6 +609,7 @@ public class UserController {
 
     /**
      * 删除我的商品
+     *
      * @param id
      * @return
      */
@@ -595,7 +620,7 @@ public class UserController {
     }
 
     @RequestMapping("preSaveGood")
-    public String preSaveGood(Model model){
+    public String preSaveGood(Model model) {
         List<Type> typeList = typeService.list();
         model.addAttribute("typeList", typeList);
         return "user-good-save";

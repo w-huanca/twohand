@@ -51,7 +51,6 @@
     <!-- End Preloader Area -->
 
 
-
     <!-- Start Navbar Area -->
     <div class="navbar-area bg-color-272b3a">
         <div class="mobile-responsive-nav">
@@ -59,7 +58,7 @@
                 <div class="mobile-responsive-menu">
                     <div class="logo">
                         <a th:href="@{/toAdminlogin}">
-                            <img  src="assets/images/logo.png" class="main-logo" alt="logo">
+                            <img src="assets/images/logo.png" class="main-logo" alt="logo">
                         </a>
                     </div>
                 </div>
@@ -74,14 +73,13 @@
                     </a>
 
 
-
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <a th:href="@{/homeUser}" style="width: 36px" class="nav-link active">主页</a>
                             </li>
 
-                            <li class="nav-item" >
+                            <li class="nav-item">
                                 <a th:href="@{/listGood}" style="width: 40px" class="nav-link active">购物</a>
                             </li>
                             <li class="nav-item" th:if="${session.currentUser}!=null">
@@ -162,7 +160,6 @@
     <!-- End Navbar Area -->
 
 
-
     <!-- Start Cart Area -->
     <div class="cart-area default-shape bg-color-linear-3 ptb-100">
         <div class="container">
@@ -189,13 +186,13 @@
                             <tbody>
                             <tr th:each="order:${pageInfo.list}">
                                 <td class="product-thumbnail">
-                                    <a >
+                                    <a>
                                         <img th:src="'http://localhost:8088/'+${order.good.gimage}" alt="Image">
                                     </a>
                                 </td>
 
                                 <td class="product-name">
-                                    <a >[[${order.good.gname}]]</a>
+                                    <a>[[${order.good.gname}]]</a>
                                 </td>
 
                                 <td class="product-price">
@@ -204,11 +201,14 @@
 
                                 <td class="product-quantity">
                                     <div class="input-counter">
-                                        <span id="sub"  th:name="${order.id}" class="minus-btn"><i class="ri-subtract-line"></i></span>
+                                        <span id="sub" th:name="${order.id}" class="minus-btn"><i
+                                                class="ri-subtract-line"></i></span>
 
-                                        <input id="salary" th:class="${order.count}"  type="text" th:value="${order.count}"/>
+                                        <input id="salary" th:class="${order.count}" type="text" th:max="${order.good.stock+order.count}" min="1"
+                                               th:value="${order.count}"/>
 
-                                        <span id="add" th:name="${order.id}"  class="plus-btn"><i class="ri-add-line"></i></span>
+                                        <span id="add" th:name="${order.id}" class="plus-btn"><i
+                                                class="ri-add-line"></i></span>
                                     </div>
                                 </td>
 
@@ -251,7 +251,7 @@
                     </ul>
 
                     <a th:href="@{/payOrder}" class="default-btn">
-                       支付
+                        支付
                     </a>
                 </div>
             </div>
@@ -265,7 +265,6 @@
         </div>
     </div>
     <!-- End Cart Area -->
-
 
 
     <!-- Start Footer Area -->
@@ -312,6 +311,8 @@
 <!--<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
 <script src='https://s1.pstatp.com/cdn/expire-1-M/jquery/1.10.2/jquery.min.js'></script>
 <script>
+    // 获取id名为 salary 的元素
+    const input = document.querySelector('input[id="salary"]');
 
     $(function () {
         // - 绑定点击事件
@@ -321,26 +322,32 @@
             var workerSalary = $(this).next().attr("class");
             console.log(workerId)
             console.log(workerSalary)
-            //计算调整后的工资
+            //计算调整后的数量
             workerSalary = parseInt(workerSalary);
-            workerSalary -= 1;
-            //$(this).next().text(workerSalary);
-            $.ajax({
-                url:'/updateOrder',
-                data:{
-                    orderId:workerId,
-                    count:workerSalary
-                },
-                method:"POST",
-                success:function (data) {
-                    if(data == "OK"){
-                        alert("减少成功");
-                        window.location.href ="/cart";
-                    }else {
-                        alert("减少失败");
+            if (workerSalary <= 1) {
+                // workerSalary = 1;
+                alert("已达加购最小数量");
+                window.location.href = "/cart";
+            } else {
+                workerSalary -= 1;
+                //$(this).next().text(workerSalary);
+                $.ajax({
+                    url: '/updateOrder',
+                    data: {
+                        orderId: workerId,
+                        count: workerSalary
+                    },
+                    method: "POST",
+                    success: function (data) {
+                        if (data == "OK") {
+                            alert("减少成功");
+                            window.location.href = "/cart";
+                        } else {
+                            alert("减少失败")
+                        }
                     }
-                }
-            })
+                })
+            }
         })
     })
 
@@ -350,26 +357,32 @@
             //获取id
             var workerId = $(this).attr("name");
             var workerSalary = $(this).prev().attr("class");
-            //计算调整后的工资
+            //计算调整后的数量
             workerSalary = parseInt(workerSalary);
-            workerSalary += 1;
-            //$(this).prev().text(workerSalary);
-            $.ajax({
-                url:'/updateOrder',
-                data:{
-                    orderId:workerId,
-                    count:workerSalary
-                },
-                method:"POST",
-                success:function (data) {
-                    if(data == "OK"){
-                        alert("添加成功");
-                        window.location.href ="/cart";
-                    }else {
-                        alert("添加失败");
+            // alert("剩余库存量："+pageInfo);
+            if (workerSalary >= parseInt(input.max)) {
+                alert("库存不足");
+                window.location.href = "/cart";
+            } else {
+                workerSalary += 1;
+                //$(this).prev().text(workerSalary);
+                $.ajax({
+                    url: '/updateOrder',
+                    data: {
+                        orderId: workerId,
+                        count: workerSalary
+                    },
+                    method: "POST",
+                    success: function (data) {
+                        if (data == "OK") {
+                            alert("添加成功");
+                            window.location.href = "/cart";
+                        } else {
+                            alert("添加失败");
+                        }
                     }
-                }
-            })
+                })
+            }
         })
     })
 </script>
