@@ -252,27 +252,31 @@
                             <h6 class="title">设置</h6>
                         </div>
 
-                            <div class="card-body">
-                                <div class="row">
-                                    <input name="id" th:value="${user.id}" type="hidden"/>
-                                    <div class="col-sm-12 m-b30">
-                                        <label class="form-label">用户名</label>
-                                        <input type="text" th:value="${user.username}" name="username" class="form-control" >
-                                    </div>
-                                    <div class="col-sm-12 m-b30">
-                                        <label class="form-label">密码</label>
-                                        <input type="password" th:value="${session.password}" name="password" class="form-control">
-                                    </div>
-                                    <div class="col-sm-12 m-b30">
-                                        <label class="form-label">手机</label>
-                                        <input type="text" th:value="${user.phone}" name="phone" class="form-control">
-                                    </div>
-                                    <div class="col-sm-12 m-b30">
-                                        <label class="form-label">邮箱</label>
-                                        <input type="text" th:value="${user.email}" name="email" class="form-control">
-                                    </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <input name="id" th:value="${user.id}" type="hidden"/>
+                                <div class="col-sm-12 m-b30">
+                                    <label class="form-label">用户名</label>
+                                    <input type="text" th:value="${user.username}" name="username" class="form-control" >
+                                    <div th:if="${usernameError != null}" th:text="${usernameError}" class="text-danger"></div>
+                                </div>
+                                <div class="col-sm-12 m-b30">
+                                    <label class="form-label">密码</label>
+                                    <input type="password" th:value="${session.password}" name="password" class="form-control">
+                                    <div th:if="${passwordError != null}" th:text="${passwordError}" class="text-danger"></div>
+                                </div>
+                                <div class="col-sm-12 m-b30">
+                                    <label class="form-label">手机</label>
+                                    <input type="text" th:value="${user.phone}" name="phone" class="form-control">
+                                    <div th:if="${phoneError != null}" th:text="${phoneError}" class="text-danger"></div>
+                                </div>
+                                <div class="col-sm-12 m-b30">
+                                    <label class="form-label">邮箱</label>
+                                    <input type="text" th:value="${user.email}" name="email" class="form-control">
+                                    <div th:if="${emailError != null}" th:text="${emailError}" class="text-danger"></div>
                                 </div>
                             </div>
+                        </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">更新</button>
 

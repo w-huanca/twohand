@@ -177,57 +177,91 @@
                         <form enctype="multipart/form-data" method="post" th:action="@{/updateStudentProfile}">
                             <input name="id" th:value="${user.id}" type="hidden"/>
                             <div class="row">
+                                <!-- 头像 -->
                                 <img style="max-width: 51%" th:src="'http://localhost:8088/'+${user.simage}" alt="Image">&nbsp;
-
-
+                                <!-- 头像上传 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <input type="file" name="file"  class="form-control" placeholder="头像">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
-
+                                <!-- 用户名 -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="sname" th:value="${user.sname}" class="form-control"  placeholder="用户名">
-                                        <div class="help-block with-errors"></div>
+                                        <input type="text" name="sname" th:value="${user.sname}" class="form-control" placeholder="用户名">
+                                        <div th:if="${snameError != null}" th:text="${snameError}" class="text-danger"></div>
                                     </div>
                                 </div>
+                                <!-- 密码 -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="password" name="password" th:value="${session.password}"  class="form-control"  placeholder="密码">
-                                        <div class="help-block with-errors"></div>
+                                        <input type="password" name="password" th:value="${session.password}" class="form-control" placeholder="密码">
+                                        <div th:if="${passwordError != null}" th:text="${passwordError}" class="text-danger"></div>
                                     </div>
                                 </div>
-
+                                <!-- 性别 -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="sex" th:value="${user.sex}"  class="form-control" placeholder="性别">
-                                        <div class="help-block with-errors"></div>
+                                        <input type="text" name="sex" th:value="${user.sex}" class="form-control" placeholder="性别">
+                                        <div th:if="${sexError != null}" th:text="${sexError}" class="text-danger"></div>
                                     </div>
                                 </div>
-
+                                <!-- 年龄 -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <input type="text" name="age" th:value="${user.age}" class="form-control" placeholder="年龄">
-                                        <div class="help-block with-errors"></div>
+                                        <div th:if="${ageError != null}" th:text="${ageError}" class="text-danger"></div>
                                     </div>
                                 </div>
+                                <!-- 手机号 -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <input type="text" name="phone" th:value="${user.phone}" class="form-control" placeholder="手机">
-                                        <div class="help-block with-errors"></div>
+                                        <div th:if="${phoneError != null}" th:text="${phoneError}" class="text-danger"></div>
                                     </div>
                                 </div>
+                                <!-- 邮箱 -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <input type="text" name="email" th:value="${user.email}" class="form-control" placeholder="邮箱">
-                                        <div class="help-block with-errors"></div>
+                                        <div th:if="${emailError != null}" th:text="${emailError}" class="text-danger"></div>
                                     </div>
                                 </div>
-
-
-
+                                <!-- 学院 -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="college">学院</label>
+                                        <select name="college" class="form-control" id="college" required
+                                                style="background-color: #272b3a; color: #ffffff;">
+                                            <option value="">请选择学院</option>
+                                            <option th:each="college : ${colleges}"
+                                                    th:value="${college}"
+                                                    th:text="${college}"
+                                                    th:selected="${college == user.college}"
+                                                    style="background-color: #ffffff; color: #000000;">
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">请选择您的学院</div>
+                                    </div>
+                                </div>
+                                <!-- 专业 -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="major">专业</label>
+                                        <select name="major" class="form-control" id="major" required
+                                                style="background-color: #272b3a; color: #ffffff;">
+                                            <option value="">请选择专业</option>
+                                            <option th:each="major : ${majors}"
+                                                    th:value="${major}"
+                                                    th:text="${major}"
+                                                    th:selected="${major == user.major}"
+                                                    style="background-color: #ffffff; color: #000000;">
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">请选择您的专业</div>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 col-md-12">
                                     <button type="submit" class="default-btn">
                                         保存

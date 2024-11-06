@@ -185,6 +185,10 @@
 
                             <tbody>
                             <tr th:each="order:${pageInfo.list}">
+                                <!--复选框-->
+                                <td class="product-checkbox">
+                                    <input type="checkbox" class="product-select" th:id="'checkbox_' + ${order.id}" th:data-id="${order.id}" th:checked="${order.gid == session.newGoodId}" />
+                                </td>
                                 <td class="product-thumbnail">
                                     <a>
                                         <img th:src="'http://localhost:8088/'+${order.good.gimage}" alt="Image">
@@ -195,9 +199,9 @@
                                     <a>[[${order.good.gname}]]</a>
                                 </td>
 
-                                <td class="product-price">
-                                    <span class="unit-amount">￥[[${order.good.pricen}]]</span>
-                                </td>
+<!--                                <td class="product-price">-->
+<!--                                    <span class="unit-amount">￥[[${order.good.pricen}]]</span>-->
+<!--                                </td>-->
 
                                 <td class="product-quantity">
                                     <div class="input-counter">
@@ -212,8 +216,9 @@
                                     </div>
                                 </td>
 
+                                <!--价格-->
                                 <td class="product-subtotal">
-                                    <span class="subtotal-amount">￥[[${order.total}]]</span>
+                                    <span class="subtotal-amount" th:text="'￥'+${order.good.pricen}">￥[[${order.good.pricen}]]</span>
                                 </td>
 
                                 <td class="trash">
@@ -247,7 +252,7 @@
                     <h3>购物车总额</h3>
                     <ul>
 
-                        <li><b>总额</b> <span><b>[[${totalMoney}]]</b></span></li>
+                        <li id="selectedTotal"><b>总额</b> <span>0</span></li>
                     </ul>
 
                     <a th:href="@{/payOrder}" class="default-btn">
@@ -389,6 +394,59 @@
             }
         })
     })
+
+    // 计算选中商品的总价
+    function calculateSelectedTotal() {
+        var total = 0;
+        document.querySelectorAll('.product-select:checked').forEach(function(checkbox) {
+            var subtotal = parseFloat(checkbox.closest('tr').querySelector('.subtotal-amount').textContent.replace('￥', ''));
+            total += subtotal;
+        });
+        document.getElementById('selectedTotal').querySelector('span').textContent = total.toFixed(2);
+    }
+
+    // 为每个商品选择框绑定change事件
+    document.querySelectorAll('.product-select').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            calculateSelectedTotal();
+        });
+    });
+
+    // 页面加载时计算一次总价
+    calculateSelectedTotal();
+
+    // 绑定支付按钮点击事件
+    document.querySelector('.default-btn').addEventListener('click', function(event) {
+        event.preventDefault(); // 阻止默认行为
+        var selectedIds = [];
+        document.querySelectorAll('.product-select:checked').forEach(function(checkbox) {
+            selectedIds.push(checkbox.dataset.id);
+        });
+
+        if (selectedIds.length === 0) {
+            alert('请选择至少一个商品进行结算');
+            return;
+        }
+
+        // 发送请求到后端进行结算
+        fetch('/paySelectedOrders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ orderIds: selectedIds }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('结算成功');
+                    window.location.href = '/listOrder'; // 重定向到订单列表页面
+                } else {
+                    alert('结算失败，请重试');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
 </script>
 
 </body>

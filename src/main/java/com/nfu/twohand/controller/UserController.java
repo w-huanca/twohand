@@ -241,6 +241,15 @@ public class UserController {
     }
 
     /**
+     * 取消收藏
+     */
+    @RequestMapping("delCollection/{orderId}")
+    public String delCollection(@PathVariable Integer orderId, HttpSession session) {
+        boolean remove = orderService.removeById(orderId);
+        return "redirect:/collection";
+    }
+
+    /**
      * 购物车
      *
      * @param session
@@ -317,13 +326,13 @@ public class UserController {
      * @return
      */
     @RequestMapping("/goodToCart")
-    public String foodToCart(Integer goodId, Integer count, HttpSession session) {
-        Integer gid = (Integer) session.getAttribute("goodId");
+    public String goodToCart(Integer goodId, Integer count, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
             session.setAttribute("msg", "您暂未登录，请先登录！");
-            return "redirect:/toGoodSingle/" + gid;
+            return "redirect:/toGoodSingle/" + goodId;
         }
+        // 检查商品是否已在购物车中
         QueryWrapper<GOrder> qw = new QueryWrapper<>();
         qw.eq("sid", userId);
         qw.eq("gid", goodId);
@@ -331,16 +340,18 @@ public class UserController {
         GOrder one = orderService.getOne(qw);
         if (one != null) {
             session.setAttribute("msg", "该商品已经在购物车中");
-            return "redirect:/toGoodSingle/" + gid;
+            return "redirect:/toGoodSingle/" + goodId;
         }
+        // 检查库存
         Good byId = goodService.getById(goodId);
         if (count > byId.getStock()) {
             session.setAttribute("msg", "库存不足");
-            return "redirect:/toGoodSingle/" + gid;
+            return "redirect:/toGoodSingle/" + goodId;
         } else if (count <= 0) {
             session.setAttribute("msg", "数量不能小于等于0");
-            return "redirect:/toGoodSingle/" + gid;
+            return "redirect:/toGoodSingle/" + goodId;
         }
+        // 添加商品到购物车
         Good food = goodService.getById(goodId);
         GOrder order = new GOrder();
         order.setSid(userId);
@@ -349,8 +360,11 @@ public class UserController {
         order.setTotal(food.getPrice() * count);
         orderService.save(order);
 
+        // 更新库存
         food.setStock(food.getStock() - count);
         goodService.updateById(food);
+        // 将新添加商品的ID存储在session中
+        session.setAttribute("newGoodId", goodId);
         return "redirect:/cart";
     }
 

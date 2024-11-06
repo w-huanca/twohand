@@ -440,13 +440,43 @@ public class AccountController {
      * @return
      */
     @RequestMapping("updateAdminProfile")
-    public String updateAdminProfile(User user, MultipartFile file) {
+    public String updateAdminProfile(User user, MultipartFile file, Model model) {
+        boolean hasError = false;
+        // 校验用户名
+        if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
+            model.addAttribute("usernameError", "用户名不能为空");
+            hasError = true;
+        }
+        // 校验密码
+        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+            model.addAttribute("passwordError", "密码不能为空");
+            hasError = true;
+        }
+        // 校验手机号
+        if (user.getPhone() == null || !user.getPhone().matches("\\d{11}")) {
+            model.addAttribute("phoneError", "手机号格式不正确");
+            hasError = true;
+        }
+        // 校验邮箱
+        if (user.getEmail() == null || !user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            model.addAttribute("emailError", "邮箱格式不正确");
+            hasError = true;
+        }
+
+        // 如果有错误，重新加载数据并返回页面
+        if (hasError) {
+            // 重新加载用户数据
+            User one = userService.getById(user.getId());
+            model.addAttribute("user", one);
+
+            return "admin-profile";
+        }
+
         if (!file.isEmpty()) {
             transFile(user, file);
         }
-        String s = DigestUtils.md5Hex(user.getPassword());
-        user.setPassword(s);
-        boolean b = userService.updateById(user);
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+        userService.updateById(user);
         return "redirect:/profile";
     }
 
@@ -498,18 +528,79 @@ public class AccountController {
         qw.eq("sname", currentUser);
         Student one = studentService.getOne(qw);
         one.setPassword(password);
+        // 查询学院
+        QueryWrapper<Student> collegeWrapper = new QueryWrapper<>();
+        collegeWrapper.select("distinct college").isNotNull("college");
+        List<String> colleges = studentService.listObjs(collegeWrapper, Object::toString);
+        // 查询专业
+        QueryWrapper<Student> majorWrapper = new QueryWrapper<>();
+        majorWrapper.select("distinct major").isNotNull("major");
+        List<String> majors = studentService.listObjs(majorWrapper, Object::toString);
+        // 将学院和专业列表传递给前端
+        model.addAttribute("colleges", colleges);
+        model.addAttribute("majors", majors);
         model.addAttribute("user", one);
         return "user-profile";
     }
 
     @RequestMapping("updateStudentProfile")
-    public String updateStudentProfile(Student customer, MultipartFile file) {
+    public String updateStudentProfile(Student customer, MultipartFile file, Model model) {
+        boolean hasError = false;
+        // 校验用户名
+        if (customer.getSname() == null || customer.getSname().trim().isEmpty()) {
+            model.addAttribute("snameError", "用户名不能为空");
+            hasError = true;
+        }
+        // 校验密码
+        if (customer.getPassword() == null || customer.getPassword().trim().isEmpty()) {
+            model.addAttribute("passwordError", "密码不能为空");
+            hasError = true;
+        }
+        // 校验性别
+        if (!"男".equals(customer.getSex()) && !"女".equals(customer.getSex())) {
+            model.addAttribute("sexError", "性别只能为男或女");
+            hasError = true;
+        }
+        // 校验年龄
+        if (customer.getAge() == null || customer.getAge() > 120) {
+            model.addAttribute("ageError", "年龄不能超过120岁");
+            hasError = true;
+        }
+        // 校验手机号
+        if (customer.getPhone() == null || !customer.getPhone().matches("\\d{11}")) {
+            model.addAttribute("phoneError", "手机号格式不正确");
+            hasError = true;
+        }
+        // 校验邮箱
+        if (customer.getEmail() == null || !customer.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            model.addAttribute("emailError", "邮箱格式不正确");
+            hasError = true;
+        }
+        // 如果有错误，重新加载数据并返回页面
+        if (hasError) {
+            // 重新加载用户数据
+            Student one = studentService.getById(customer.getId());
+            model.addAttribute("user", one);
+            // 重新加载学院和专业数据
+            QueryWrapper<Student> collegeWrapper = new QueryWrapper<>();
+            collegeWrapper.select("distinct college").isNotNull("college");
+            List<String> colleges = studentService.listObjs(collegeWrapper, Object::toString);
+            model.addAttribute("colleges", colleges);
+
+            QueryWrapper<Student> majorWrapper = new QueryWrapper<>();
+            majorWrapper.select("distinct major").isNotNull("major");
+            List<String> majors = studentService.listObjs(majorWrapper, Object::toString);
+            model.addAttribute("majors", majors);
+
+            return "user-profile";
+        }
+
+        // 如果没有错误，继续保存数据
         if (!file.isEmpty()) {
             transFile(customer, file);
         }
-        String s = DigestUtils.md5Hex(customer.getPassword());
-        customer.setPassword(s);
-        boolean b = studentService.updateById(customer);
+        customer.setPassword(DigestUtils.md5Hex(customer.getPassword()));
+        studentService.updateById(customer);
         return "redirect:/profileUser";
     }
 
