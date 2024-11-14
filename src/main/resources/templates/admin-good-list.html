@@ -258,6 +258,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-responsive-md">
+                                            <span style="color: #0a0a18; font-size: medium">共有 [[${pageInfo.total}]] 条数据</span>
                                             <thead>
                                             <tr>
                                                 <th style="width:50px;">
@@ -307,13 +308,22 @@
                                             </tbody>
                                         </table>
 
-
-
                                         <div class="card-body">
-
                                             <!-- right aligned pagination-->
                                             <nav aria-label="Page navigation example">
                                                 <ul class="pagination justify-content-end pagination-primary">
+<!--                                                    <li>-->
+<!--                                                        &lt;!&ndash; mybatis plus 分页 &ndash;&gt;-->
+<!--                                                        <span style="font-size: large; margin-top: 5px">共[[${page.total}]]条</span>-->
+<!--                                                    </li>-->
+<!--                                                    <li>-->
+<!--                                                        <select name="pageSize" id="pageSize" onchange="window.location.href='listGood?pageSize='+this.value" autofocus>-->
+<!--                                                            <option value="6">6条/页</option>-->
+<!--                                                            <option value="8" selected>8条/页</option>-->
+<!--                                                            <option value="10">10条/页</option>-->
+<!--                                                            <option value="12">12条/页</option>-->
+<!--                                                        </select>-->
+<!--                                                    </li>-->
                                                     <li th:if="!${pageInfo.hasPreviousPage}" class="page-item page-indicator disabled">
                                                         <a class="page-link" href="javascript:void(0)">
                                                             <i class="la la-angle-left"></i></a>
@@ -322,7 +332,6 @@
                                                         <a class="page-link" th:href="'/good/listGood?pageNum='+${pageInfo.prePage}" >
                                                             <i class="la la-angle-left"></i></a>
                                                     </li>
-
 
                                                     <li th:each="nav:${pageInfo.navigatepageNums}"  class="page-item ">
                                                         <a th:if="${nav != pageInfo.pageNum}" th:href="'/good/listGood?pageNum='+${nav}" class="page-link" th:text="${nav}" ></a>

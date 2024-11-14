@@ -1,6 +1,7 @@
 package com.nfu.twohand.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nfu.twohand.pojo.Good;
@@ -60,6 +61,10 @@ public class GoodController {
             Student student = studentService.getById(good1.getSid());
             good1.setStudent(student);
         }
+
+        // mybatis plus 分页
+        Page<Good> goodPage = goodService.getGoodsByPage(new Page<>(pageNum, pageSize), qw);
+        model.addAttribute("page", goodPage);
 
         PageInfo<Good> pageInfo = new PageInfo<>(list);
         model.addAttribute("pageInfo", pageInfo);

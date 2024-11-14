@@ -63,13 +63,15 @@ public class UserController {
         }
         PageHelper.startPage(pageNum, pageSize);
         QueryWrapper<Good> qw = new QueryWrapper<>();
+        // 搜索框查询
         if (good.getGname() != null) {
             qw.like("gname", good.getGname());
         }
         if (good.getType() != null) {
             qw.like("type", good.getType());
         }
-
+        // 不显示库存为0的商品
+        qw.ne("stock", 0);
         List<Good> list = goodService.list(qw);
         for (Good good1 : list) {
             Student student = studentService.getById(good1.getSid());
