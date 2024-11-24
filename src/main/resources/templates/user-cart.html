@@ -174,9 +174,11 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
+                                <th>
+                                    <input type="checkbox" id="checkAll" required="">
+                                </th>
                                 <th scope="col">商品</th>
                                 <th scope="col">名称</th>
-                                <th scope="col">现价</th>
                                 <th scope="col">数量</th>
                                 <th scope="col">总额</th>
                                 <th scope="col">删除</th>
@@ -187,7 +189,8 @@
                             <tr th:each="order:${pageInfo.list}">
                                 <!--复选框-->
                                 <td class="product-checkbox">
-                                    <input type="checkbox" class="product-select" th:id="'checkbox_' + ${order.id}" th:data-id="${order.id}" th:checked="${order.gid == session.newGoodId}" />
+                                    <input type="checkbox" class="product-select" th:id="'checkbox_' + ${order.id}"
+                                           th:data-id="${order.id}" th:checked="${order.gid == session.newGoodId}"/>
                                 </td>
                                 <td class="product-thumbnail">
                                     <a>
@@ -199,16 +202,17 @@
                                     <a>[[${order.good.gname}]]</a>
                                 </td>
 
-<!--                                <td class="product-price">-->
-<!--                                    <span class="unit-amount">￥[[${order.good.pricen}]]</span>-->
-<!--                                </td>-->
+                                <!--                                <td class="product-price">-->
+                                <!--                                    <span class="unit-amount">￥[[${order.good.pricen}]]</span>-->
+                                <!--                                </td>-->
 
                                 <td class="product-quantity">
                                     <div class="input-counter">
                                         <span id="sub" th:name="${order.id}" class="minus-btn"><i
                                                 class="ri-subtract-line"></i></span>
 
-                                        <input id="salary" th:class="${order.count}" type="text" th:max="${order.good.stock+order.count}" min="1"
+                                        <input id="salary" th:class="${order.count}" type="text"
+                                               th:max="${order.good.stock+order.count}" min="1"
                                                th:value="${order.count}"/>
 
                                         <span id="add" th:name="${order.id}" class="plus-btn"><i
@@ -398,7 +402,7 @@
     // 计算选中商品的总价
     function calculateSelectedTotal() {
         var total = 0;
-        document.querySelectorAll('.product-select:checked').forEach(function(checkbox) {
+        document.querySelectorAll('.product-select:checked').forEach(function (checkbox) {
             var subtotal = parseFloat(checkbox.closest('tr').querySelector('.subtotal-amount').textContent.replace('￥', ''));
             total += subtotal;
         });
@@ -406,8 +410,8 @@
     }
 
     // 为每个商品选择框绑定change事件
-    document.querySelectorAll('.product-select').forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
+    document.querySelectorAll('.product-select').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
             calculateSelectedTotal();
         });
     });
@@ -416,10 +420,10 @@
     calculateSelectedTotal();
 
     // 绑定支付按钮点击事件
-    document.querySelector('.default-btn').addEventListener('click', function(event) {
+    document.querySelector('.default-btn').addEventListener('click', function (event) {
         event.preventDefault(); // 阻止默认行为
         var selectedIds = [];
-        document.querySelectorAll('.product-select:checked').forEach(function(checkbox) {
+        document.querySelectorAll('.product-select:checked').forEach(function (checkbox) {
             selectedIds.push(checkbox.dataset.id);
         });
 
@@ -434,7 +438,7 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ orderIds: selectedIds }),
+            body: JSON.stringify({orderIds: selectedIds}),
         })
             .then(response => response.json())
             .then(data => {

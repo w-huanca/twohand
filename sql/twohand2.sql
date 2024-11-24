@@ -6,27 +6,6 @@ USE twohand2;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for board
--- ----------------------------
-DROP TABLE IF EXISTS `board`;
-CREATE TABLE `board` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `sname` varchar(255) DEFAULT NULL COMMENT '用户名',
-  `email` varchar(255) DEFAULT NULL COMMENT '密码',
-  `simage` varchar(255) DEFAULT NULL COMMENT '邮箱',
-  `btime` datetime DEFAULT NULL COMMENT '手机',
-  `content` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of board
--- ----------------------------
-INSERT INTO `board` VALUES ('1', '张三', '12345678@qq.com', 'q6.jfif', '2024-08-14 10:53:51', '宿管阿姨，三楼厕所堵了');
-INSERT INTO `board` VALUES ('3', '张三', '1234567@qq.com', 'q6.jfif', '2024-08-02 10:18:47', '哈哈哈');
-INSERT INTO `board` VALUES ('4', '张三', '1234567@qq.com', 'q6.jfif', '2024-08-14 10:54:17', '哈哈哈');
-
--- ----------------------------
 -- Table structure for comment
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;

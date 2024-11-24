@@ -524,52 +524,61 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">添加学生</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">姓名</label>
-                        <input type="text" class="form-control w-100 mb-0" name="sname">
+                <div class="modal-body row">
+                    <div class="col-lg-6">
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">姓名</label>
+                            <input type="text" class="form-control w-100 mb-0" name="sname">
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">年龄</label>
+                            <input type="text" class="form-control " name="age">
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">手机</label>
+                            <input type="text" class="form-control " name="phone">
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">学院</label>
+<!--                            <input type ="text" class="form-control"  name="college">-->
+                            <select class="w-100" aria-label="Default select example" name="college">
+                                <option th:each="college : ${colleges}"
+                                        th:value="${college}"
+                                        th:text="${college}" >
+                                </option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">性别</label>
-                        <select class="w-100" aria-label="Default select example" name="sex">
-
-                            <option value="男">男</option>
-                            <option value="女">女</option>
-
-                        </select>
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">年龄</label>
-                        <input type="text" class="form-control " name="age">
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">手机</label>
-                        <input type="text" class="form-control " name="phone">
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">邮箱</label>
-                        <input type="text" class="form-control " name="email">
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">学院</label>
-                        <input type ="text" class="form-control"  name="college">
-
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">专业</label>
-                        <input type ="text" class="form-control"  name="major">
-
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">地址</label>
-                        <input type ="text" class="form-control"  name="address">
-
+                    <div class="col-lg-6">
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">性别</label>
+                            <select class="w-100" aria-label="Default select example" name="sex">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">地址</label>
+                            <input type ="text" class="form-control"  name="address">
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">邮箱</label>
+                            <input type="text" class="form-control " name="email">
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">专业</label>
+<!--                            <input type ="text" class="form-control"  name="major">-->
+                            <select class="w-100" aria-label="Default select example" name="major">
+                                <option th:each="major : ${majors}"
+                                        th:value="${major}"
+                                        th:text="${major}" >
+                                </option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3 d-block">
                         <label  class="form-label d-block mb-2">头像</label>
                         <input type ="file"  class="form-control"  name="file">
-
                     </div>
                 </div>
                 <div class="modal-footer">

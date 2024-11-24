@@ -46,6 +46,19 @@ public class StudentController {
         if (student.getSname() != null) {
             qw.like("sname", student.getSname());
         }
+
+        // 查询学院
+        QueryWrapper<Student> collegeWrapper = new QueryWrapper<>();
+        collegeWrapper.select("distinct college").isNotNull("college");
+        List<String> colleges = studentService.listObjs(collegeWrapper, Object::toString);
+        // 查询专业
+        QueryWrapper<Student> majorWrapper = new QueryWrapper<>();
+        majorWrapper.select("distinct major").isNotNull("major");
+        List<String> majors = studentService.listObjs(majorWrapper, Object::toString);
+        // 将学院和专业列表传递给前端
+        model.addAttribute("colleges", colleges);
+        model.addAttribute("majors", majors);
+
         List<Student> list = studentService.list(qw);
         PageInfo<Student> pageInfo = new PageInfo<>(list);
         model.addAttribute("pageInfo", pageInfo);

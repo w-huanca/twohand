@@ -393,31 +393,34 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">添加商品</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">名称</label>
-                        <input type="text" class="form-control w-100 mb-0" name="gname">
+                <div class="modal-body row">
+                    <div class="col-lg-6">
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">名称</label>
+                            <input type="text" class="form-control w-100 mb-0" name="gname">
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">单价</label>
+                            <input type="text" class="form-control " name="price">
+                        </div>
                     </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">分类</label>
-                        <select class="w-100" aria-label="Default select example" name="type">
-                            <option th:each="store : ${typeList}" th:value="${store.type}" th:text="${store.type}"></option>
-                        </select>
+                    <div class="col-lg-6">
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">分类</label>
+                            <select class="w-100" aria-label="Default select example" name="type">
+                                <option th:each="store : ${typeList}" th:value="${store.type}" th:text="${store.type}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3 d-block">
+                            <label  class="form-label d-block mb-2">折扣</label>
+                            <input type="text" class="form-control " name="discount">
+                        </div>
                     </div>
-
                     <div class="mb-3 d-block">
                         <label  class="form-label d-block mb-2">发布人</label>
                         <select class="w-100" aria-label="Default select example" name="sid">
                             <option th:each="store : ${studentList}" th:value="${store.id}" th:text="${store.sname}"></option>
                         </select>
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">单价</label>
-                        <input type="text" class="form-control " name="price">
-                    </div>
-                    <div class="mb-3 d-block">
-                        <label  class="form-label d-block mb-2">折扣</label>
-                        <input type="text" class="form-control " name="discount">
                     </div>
                     <div class="mb-3 d-block">
                         <label  class="form-label d-block mb-2">库存</label>
