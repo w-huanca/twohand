@@ -21,6 +21,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -314,10 +316,15 @@ public class UserController {
             Good good = goodService.getById(order.getGid());
             order.setGood(good);
             order.setIsorder(1);
+            // 获取当前时间并转换为Date类型
+            LocalDateTime now = LocalDateTime.now();
+            Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+            order.setOrderTime(date);
             orderService.updateById(order);
         }
         return "redirect:/listOrder";
     }
+
 
     /**
      * 购物车添加商品
@@ -359,7 +366,7 @@ public class UserController {
         order.setSid(userId);
         order.setGid(goodId);
         order.setCount(count);
-        order.setTotal(food.getPrice() * count);
+        order.setTotal(food.getPricen() * count);
         orderService.save(order);
 
         // 更新库存
@@ -614,12 +621,17 @@ public class UserController {
     }
 
     @RequestMapping("updateGood")
-    public String updateStudent(Good student, MultipartFile file, HttpSession session) {
+    public String updateStudent(Good good, MultipartFile file, Model model) {
         if (!file.isEmpty()) {
-            transfile(student, file);
+            transfile(good, file);
         }
-        student.setPricen(student.getPricen() * student.getDiscount());
-        boolean b = goodService.updateById(student);
+        if (good.getDiscount() < 0) {
+//            session.setAttribute("msg", "商品折扣不能小于0");
+            model.addAttribute("msg", "商品折扣不能小于0");
+            return "user-good-update";
+        }
+        good.setPricen(good.getPrice() * good.getDiscount());
+        boolean b = goodService.updateById(good);
         return "redirect:/listMyGood";
     }
 
@@ -643,7 +655,7 @@ public class UserController {
     }
 
     @RequestMapping("saveGood")
-    public String saveGood(Good good, MultipartFile file, HttpSession session) {
+    public String saveGood(Good good, MultipartFile file, HttpSession session, Model model) {
         if (!file.isEmpty()) {
             transfile(good, file);
         }
@@ -652,8 +664,13 @@ public class UserController {
             session.setAttribute("msg", "您暂未登录，请先登录！");
             return "redirect:/login";
         }
-        if (good.getPricen() != null && good.getDiscount() != null) {
-            good.setPricen(good.getPricen() * good.getDiscount());
+        if (good.getPrice() != null && good.getDiscount() != null) {
+            good.setPricen(good.getPrice() * good.getDiscount());
+        }
+        if (good.getDiscount() < 0) {
+//            session.setAttribute("msg", "商品折扣不能小于0");
+            model.addAttribute("msg", "商品折扣不能小于0");
+            return "user-good-save";
         }
         good.setSid(userId);
         good.setStar(0);

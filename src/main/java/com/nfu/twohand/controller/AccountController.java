@@ -524,10 +524,12 @@ public class AccountController {
             return "redirect:/login";
         }
         String password = (String) session.getAttribute("password");
+        Integer userId = (Integer) session.getAttribute("userId");
         QueryWrapper<Student> qw = new QueryWrapper<>();
-        qw.eq("sname", currentUser);
+        qw.eq("id", userId);
         Student one = studentService.getOne(qw);
         one.setPassword(password);
+        one.setId(userId);
         // 查询学院
         QueryWrapper<Student> collegeWrapper = new QueryWrapper<>();
         collegeWrapper.select("distinct college").isNotNull("college");
@@ -544,7 +546,7 @@ public class AccountController {
     }
 
     @RequestMapping("updateStudentProfile")
-    public String updateStudentProfile(Student customer, MultipartFile file, Model model) {
+    public String updateStudentProfile(Student customer, MultipartFile file, Model model, HttpSession session) {
         boolean hasError = false;
         // 校验用户名
         if (customer.getSname() == null || customer.getSname().trim().isEmpty()) {
@@ -599,6 +601,7 @@ public class AccountController {
         if (!file.isEmpty()) {
             transFile(customer, file);
         }
+        session.setAttribute("password", customer.getPassword());
         customer.setPassword(DigestUtils.md5Hex(customer.getPassword()));
         studentService.updateById(customer);
         return "redirect:/profileUser";

@@ -216,6 +216,11 @@
                             <h4 class="card-title">修改商品信息</h4>
                         </div>
                         <div class="card-body">
+                            <p style="color:red"
+                               th:if="${not #strings.isEmpty(msg)}"
+                               th:text="${msg}">
+                                <!--这个msg既可以是model里的，也可以是session里的-->
+                            </p>
                             <div class="basic-form">
                                 <form enctype="multipart/form-data" method="post" th:action="@{/good/updateGood}">
                                     <fieldset >
@@ -237,7 +242,6 @@
                                                 <option th:each="store : ${studentList}" th:selected="${store.id eq good.sid}" th:value="${store.id}" th:text="${store.sname}"></option>
                                             </select>
                                         </div>
-
 
                                         <div class="mb-3">
                                             <label class="form-label">原价</label>

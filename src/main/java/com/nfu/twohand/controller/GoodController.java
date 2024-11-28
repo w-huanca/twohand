@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,10 +102,15 @@ public class GoodController {
     }
 
     @RequestMapping("updateGood")
-    public String updateGood(Good good, MultipartFile file) {
+    public String updateGood(Good good, MultipartFile file, Model model) {
         if (!file.isEmpty()) {
             transfile(good, file);
         }
+        if (good.getDiscount() < 0) {
+            model.addAttribute("msg", "商品折扣不能小于0");
+            return "admin-good-update";
+        }
+
         boolean save = goodService.updateById(good);
         return "redirect:/good/listGood";
     }

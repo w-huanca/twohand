@@ -173,7 +173,11 @@
                 <div class="col-lg-6">
                     <div class="contact-form">
                         <h3>商品信息</h3>
-
+                        <p style="color:red"
+                           th:if="${not #strings.isEmpty(msg)}"
+                           th:text="${msg}">
+                            <!--这个msg既可以是model里的，也可以是session里的-->
+                        </p>
                         <form enctype="multipart/form-data" method="post" th:action="@{/saveGood}">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
